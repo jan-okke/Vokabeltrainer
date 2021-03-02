@@ -73,7 +73,7 @@ class VocabularyData:
         self.name = name
         self.content = []
 
-    def add_content(self, content: list):
+    def add_content(self, content: list = ["lang1", "lang2"]):
         self.content.append(content)
 
     def clear(self):
@@ -85,21 +85,32 @@ class VocabularyList:
         self.cwd = cwd + "\\Vocabulary\\"  # current working directory
         self.vocabulary_list = []
 
-    def load(self, vocabulary_name: str):
+    def load(self, vocabulary_name: str) -> VocabularyData:
         data = open(self.cwd + vocabulary_name + ".txt", "r")
         csv_data = csv.reader(data)
         # new_data = VocabularyData(csv_data[0], vocabulary_name)
         index = 0
+        new_data = VocabularyData([], "")  # Empty, ignore
         for _data in csv_data:
             index += 1
             if index == 1:
                 new_data = VocabularyData(_data, vocabulary_name)
                 continue
             new_data.add_content(_data)
-        #print(new_data.content, new_data.languages, new_data.name)
+        # print(new_data.content, new_data.languages, new_data.name)
 
         return new_data
 
+    def save(self, data: VocabularyData):
+        path = self.cwd + data.name + ".txt"
+        output = open(path, "w", newline="")
+        writer = csv.writer(output)
+        writer.writerow(data.languages)
+        for content in data.content:
+            writer.writerow(content)
 
-TestList = VocabularyList(os.getcwd())
-TestList.load("test")
+def test():
+    TestList = VocabularyList(os.getcwd())
+    d = TestList.load("test2")
+    d.add_content(["Vogel", "bird"])
+    TestList.save(d)

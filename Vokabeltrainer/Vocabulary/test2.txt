@@ -1,0 +1,4 @@
+German,English
+Hallo,Hello
+Mutter,Mother
+Vogel,bird
