@@ -2,6 +2,7 @@ import wx
 import gui
 import os
 import csv
+import random
 
 App = wx.App()
 
@@ -56,15 +57,28 @@ class Statistics:
 
 
 class Trainer:
-    def __init__(self):
-        self.statistics = Statistics()
-        self.statistics.load(os.getcwd())
+    session_id = None
+    session_date = None
+    session_length = None
+    session_lang = None
 
-    def start_training(self, vocabulary_list_name, language):
-        # GUI.TODO
-        Vocabulary = VocabularyList(os.getcwd())
-        Vocabulary.load(vocabulary_list_name)
-        self.statistics.wrong_guesses += 1  # like this TODO
+    flashcards = None  # list of the loaded flashcards
+    used_flashcard_ids = []
+
+    overall_avg = None
+    session_avg = None
+
+    def __init__(self):
+        print('init without anything else')
+
+    def __init__(self, session_id, session_date, session_length, session_lang, flashcards, used_flashcard_ids,
+                 overall_avg, session_avg):
+        self.session_id, self.session_date, self.session_length, self.session_lang, self.flashcards, self.used_flashcard_ids, self.overall_avg, self.session_avg = session_id, session_date, session_length, session_lang, flashcards, used_flashcard_ids, overall_avg, session_avg
+
+    def draw_flashcard(self):  # DRAW
+        d = random.choice([x for x in self.flashcards if self.flashcards.index(x) not in self.used_flashcard_ids])
+        self.used_flashcard_ids.append(self.flashcards.index(d))
+        return d
 
 
 class VocabularyData:
@@ -108,6 +122,7 @@ class VocabularyList:
         writer.writerow(data.languages)
         for content in data.content:
             writer.writerow(content)
+
 
 def test():
     TestList = VocabularyList(os.getcwd())
