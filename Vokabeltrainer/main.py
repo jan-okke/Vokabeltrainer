@@ -11,7 +11,7 @@ class MainFrame(gui.UserInterfaceFrame):
 
     # TODO
 
-
+"""
 class Data:
     def __init__(self, content):
         self.content = content
@@ -21,7 +21,7 @@ class Data:
 
     def as_dict(self):
         return dict(self.content)  # TODO
-
+"""
 
 class Statistics:
     def __init__(self):
@@ -33,6 +33,7 @@ class Statistics:
         self.success_rate = 0  # in percentage
 
     def load(self, cwd):
+        """
         try:
             data = Data(open(cwd + "\\statistics.txt", "r")).as_dict()
             self.number_trainings = int(data["NumberTrainings"])
@@ -44,8 +45,10 @@ class Statistics:
 
         except FileNotFoundError:
             wx.MessageBox("Couldn't load the local statistics file.")
+        """
+        pass
 
-    def save(self, data: Data):
+    def save(self, data):
         pass  # TODO
 
 
@@ -57,7 +60,7 @@ class Trainer:
     def start_training(self, vocabulary_list_name, language):
         # GUI.TODO
         Vocabulary = VocabularyList(os.getcwd())
-        Vocabulary.load(vocabulary_list_name, language)
+        Vocabulary.load(vocabulary_list_name)
         self.statistics.wrong_guesses += 1  # like this TODO
 
 
@@ -66,9 +69,9 @@ class VocabularyList:
         self.cwd = cwd  # current working directory
         self.vocabulary_list = []
 
-    def load(self, name: str, language: str) -> Data:
+    def load(self, name: str) -> Data:
         try:
-            data = Data(open(self.cwd + "\\" + name, "r"))
+            data = open(self.cwd + "\\" + name, "r"))
             # TODO: language
             return data  # TODO
         except FileNotFoundError:
@@ -78,3 +81,10 @@ class VocabularyList:
         file = open(self.cwd + "\\" + name, "w")
         # No exception because files that don't exists will be created
         # TODO: saving process in correct data segments
+
+import csv
+
+with open('Vocabulary\\test.txt', newline='') as csvfile:
+    spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+    for row in spamreader:
+        print(', '.join(row))
