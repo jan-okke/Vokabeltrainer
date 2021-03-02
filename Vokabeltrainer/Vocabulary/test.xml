@@ -2,18 +2,18 @@
 <VocabularyList language1="ENG" language2="GER">
     <vocabulary id="0">
         <german>
-            Wasser
+            "Wasser"
         </german>
         <english>
-            water
+            "water"
         </english>
     </vocabulary>
     <vocabulary id="1">
         <german>
-            Spielzeug
+            "Spielzeug"
         </german>
         <english>
-            toy
+            "toy"
         </english>
     </vocabulary>
 </VocabularyList>
