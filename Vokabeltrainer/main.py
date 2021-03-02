@@ -1,6 +1,7 @@
 import wx
 import gui
 import os
+import csv
 
 App = wx.App()
 
@@ -10,6 +11,7 @@ class MainFrame(gui.UserInterfaceFrame):
         super().__init__(parent)
 
     # TODO
+
 
 """
 class Data:
@@ -22,6 +24,7 @@ class Data:
     def as_dict(self):
         return dict(self.content)  # TODO
 """
+
 
 class Statistics:
     def __init__(self):
@@ -64,27 +67,39 @@ class Trainer:
         self.statistics.wrong_guesses += 1  # like this TODO
 
 
+class VocabularyData:
+    def __init__(self, languages, name):
+        self.languages = languages
+        self.name = name
+        self.content = []
+
+    def add_content(self, content: list):
+        self.content.append(content)
+
+    def clear(self):
+        self.content.clear()
+
+
 class VocabularyList:
     def __init__(self, cwd: str):
-        self.cwd = cwd  # current working directory
+        self.cwd = cwd + "\\Vocabulary\\"  # current working directory
         self.vocabulary_list = []
 
-    def load(self, name: str) -> Data:
-        try:
-            data = open(self.cwd + "\\" + name, "r"))
-            # TODO: language
-            return data  # TODO
-        except FileNotFoundError:
-            wx.MessageBox("Invalid vocabulary list name!")
+    def load(self, vocabulary_name: str):
+        data = open(self.cwd + vocabulary_name + ".txt", "r")
+        csv_data = csv.reader(data)
+        # new_data = VocabularyData(csv_data[0], vocabulary_name)
+        index = 0
+        for _data in csv_data:
+            index += 1
+            if index == 1:
+                new_data = VocabularyData(_data, vocabulary_name)
+                continue
+            new_data.add_content(_data)
+        #print(new_data.content, new_data.languages, new_data.name)
 
-    def save(self, name: str, data: Data):
-        file = open(self.cwd + "\\" + name, "w")
-        # No exception because files that don't exists will be created
-        # TODO: saving process in correct data segments
+        return new_data
 
-import csv
 
-with open('Vocabulary\\test.txt', newline='') as csvfile:
-    spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-    for row in spamreader:
-        print(', '.join(row))
+TestList = VocabularyList(os.getcwd())
+TestList.load("test")
