@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<VocabularyList language1="ENG" language2="GER">
+    <vocabulary id="0">
+        <german>
+            Wasser
+        </german>
+        <english>
+            water
+        </english>
+    </vocabulary>
+    <vocabulary id="1">
+        <german>
+            Spielzeug
+        </german>
+        <english>
+            toy
+        </english>
+    </vocabulary>
+</VocabularyList>
